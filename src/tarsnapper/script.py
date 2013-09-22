@@ -92,7 +92,9 @@ class TarsnapBackend(object):
         """
         if self._queried_archives is None:
             response = StringIO(self.call('--list-archives'))
-            self._queried_archives = [l.rstrip() for l in response.readlines()]
+            # If tarsnap is running verbosely, filter out extra info
+            self._queried_archives = [
+                l.split('\t')[0].rstrip() for l in response.readlines()]
         return self._queried_archives + self._known_archives
     archives = property(get_archives)
 
