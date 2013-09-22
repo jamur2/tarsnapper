@@ -63,6 +63,7 @@ class TarsnapBackend(object):
         p = subprocess.Popen(args, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         (stdout, stderr) = p.communicate()
+        self.log.debug(stderr)
         if p.returncode != 0:
             raise TarsnapError('%s' % stderr)
         return stdout
